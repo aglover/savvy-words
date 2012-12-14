@@ -1,0 +1,5 @@
+app/android/gen/
+app/android/bin/
+bin/
+.classpath
+.project

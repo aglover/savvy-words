@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+  <LinearLayout
+	android:id="@+id/widget33"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/white"
+	android:orientation="vertical"
+	android:layout_x="0dp"
+	android:layout_y="0dp">
+<TextView
+	android:id="@+id/widget36"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="TextView"
+	android:textColor="@color/black" />
+<RadioGroup
+	android:id="@+id/widget37"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+<RadioButton
+	android:id="@+id/widget39"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="RadioButton"
+	android:textColor="@color/black" />
+<RadioButton
+	android:id="@+id/widget40"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="RadioButton"
+	android:textColor="@color/black" />
+<RadioButton
+	android:id="@+id/widget41"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="RadioButton"
+	android:textColor="@color/black" />
+</RadioGroup>
+<Button
+	android:id="@+id/widget42"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Button" />
+</LinearLayout>
+    
+
+</RelativeLayout>
