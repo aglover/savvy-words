@@ -13,7 +13,7 @@
 >
 
 <TextView
-    android:id="@+id/widget36"
+    android:id="@+id/word_study_word"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -22,7 +22,7 @@
     android:textSize="20dp" />
 
 <TextView
-    android:id="@+id/widget61"
+    android:id="@+id/word_study_definition"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"

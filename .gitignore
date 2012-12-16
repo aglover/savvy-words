@@ -3,3 +3,4 @@ app/android/bin/
 bin/
 .classpath
 .project
+.DS_Store

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -17,13 +18,24 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.word_study);
 
 		final Button nextButton = (Button) findViewById(R.id.next_word);
-	
-		final Button quizButton = (Button) findViewById(R.id.take_quiz);
-		quizButton.setOnClickListener(new View.OnClickListener() {
-			
+		nextButton.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+				TextView word = (TextView) findViewById(R.id.word_study_word);
+				word.setText("Test");
+				TextView def = (TextView) findViewById(R.id.word_study_definition);
+				def.setText("TestDef");
+			}
+		});
+
+		final Button quizButton = (Button) findViewById(R.id.take_quiz);
+		quizButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(),
+						QuizActivity.class);
 				startActivity(intent);
 			}
 		});
