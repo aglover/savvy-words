@@ -17,11 +17,11 @@ public class WordEngine {
 	}
 
 	public void startStudy() {
-		Collections.shuffle(this.words, new Random(this.words.size()));
+		Collections.shuffle(this.words, new Random(System.currentTimeMillis()));
 	}
 
 	public Word getRandomWord() {
-		Word word = this.words.pop();
+		Word word = this.words.removeFirst();
 		this.words.addLast(word);
 		return word;
 	}
