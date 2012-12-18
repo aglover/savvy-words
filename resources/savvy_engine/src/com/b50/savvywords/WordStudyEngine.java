@@ -5,14 +5,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class WordEngine {
+public class WordStudyEngine {
 	private LinkedList<Word> words;
 
-	public static WordEngine getInstance(List<Word> words) {
-		return new WordEngine(words);
+	public static WordStudyEngine getInstance(List<Word> words) {
+		return new WordStudyEngine(words);
 	}
 
-	private WordEngine(List<Word> words) {
+	private WordStudyEngine(List<Word> words) {
 		this.words = new LinkedList<Word>(words);
 	}
 

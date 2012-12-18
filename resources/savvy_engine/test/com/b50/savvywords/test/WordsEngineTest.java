@@ -14,16 +14,38 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 
+import com.b50.savvywords.TestableWord;
 import com.b50.savvywords.Word;
-import com.b50.savvywords.WordEngine;
+import com.b50.savvywords.WordStudyEngine;
+import com.b50.savvywords.WordTestEngine;
 
 public class WordsEngineTest {
+
+	@Test
+	public void testTakingTest() throws Exception {
+		List<Word> words = this.getABunchOfWords();
+		WordTestEngine instance = WordTestEngine.getInstance(words);
+		assertNotNull(instance);
+		instance.startTest();
+
+		TestableWord testWord1 = instance.getRandomTestableWord();
+		assertNotNull(testWord1);
+
+		String word = testWord1.getSpelling();
+		assertNotNull(word);
+		String definition = testWord1.getValidDefinition();
+		assertNotNull(definition);
+
+		List<String> incorrectWords = testWord1.getInvalidWordAnswers();
+		assertNotNull(incorrectWords);
+	}
+
 	@Test
 	public void testEngine() throws Exception {
 		List<Word> words = this.getABunchOfWords();
-		WordEngine instance = WordEngine.getInstance(words);
+		WordStudyEngine instance = WordStudyEngine.getInstance(words);
 		assertNotNull(instance);
-		
+
 		instance.startStudy();
 		Word firstWord = instance.getRandomWord();
 		assertNotNull(firstWord);
@@ -31,17 +53,20 @@ public class WordsEngineTest {
 		assertNotNull(secondWord);
 		Word thirdWord = instance.getRandomWord();
 		assertNotNull(thirdWord);
-		
-		assertEquals(false, firstWord.getSpelling().equals(secondWord.getSpelling()));
-		assertEquals(false, firstWord.getSpelling().equals(thirdWord.getSpelling()));
-		assertEquals(false, thirdWord.getSpelling().equals(secondWord.getSpelling()));
-		
-		for(int x = 0; x < 20; x++){
+
+		assertEquals(false,
+				firstWord.getSpelling().equals(secondWord.getSpelling()));
+		assertEquals(false,
+				firstWord.getSpelling().equals(thirdWord.getSpelling()));
+		assertEquals(false,
+				thirdWord.getSpelling().equals(secondWord.getSpelling()));
+
+		for (int x = 0; x < 20; x++) {
 			assertNotNull(instance.getRandomWord());
 		}
-		
-		assertEquals(5,  instance.wordsInTest());
-		
+
+		assertEquals(5, instance.wordsInTest());
+
 	}
 
 	private List<Word> getABunchOfWords() throws Exception {
