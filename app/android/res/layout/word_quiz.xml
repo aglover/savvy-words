@@ -47,12 +47,12 @@
 	android:textColor="@color/black" />
 </RadioGroup>
 
-<Button
-    android:id="@+id/quiz_submit"
+<TextView
+    android:id="@+id/quiz_result"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    android:text="Submit" />
+    android:layout_marginLeft="40dp"
+    android:layout_marginTop="20dp"/>
 
 </LinearLayout>
     

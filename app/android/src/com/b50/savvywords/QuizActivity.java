@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -56,29 +57,35 @@ public class QuizActivity extends Activity {
 
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				Log.d("Savvy Words", "new listener invoked");
 				final RadioButton selected = (RadioButton) findViewById(checkedId);
-				String answer = (String) selected.getText();
+				final String answer = (String) selected.getText();
 				Log.d("SavvyWords", "value obtained is " + answer);
 				if (answer.equals(firstWord.getSpelling())) {
+					final TextView result = (TextView) findViewById(R.id.quiz_result);
+					result.setTextColor(Color.parseColor("#228b22"));
+					result.setText("Correct!");
 					Handler handler = new Handler();
 					handler.postDelayed(new Runnable() {
 						public void run() {
 							Intent intent = new Intent(getApplicationContext(),
 									QuizActivity.class);
 							startActivity(intent);
+							result.setText("");
 							finish();
 						}
-					}, 2000);
+					}, 2500);
 				} else {
+					final TextView result = (TextView) findViewById(R.id.quiz_result);
+					result.setTextColor(Color.parseColor("#ff0000"));
+					result.setText("Nope, that's not it! Try again.");
 					Handler handler = new Handler();
 					handler.postDelayed(new Runnable() {
 						public void run() {
 							selected.setChecked(false);
+							result.setText("");
 						}
-					}, 1000);
+					}, 2000);
 
-					Log.d("SavvyWords", "answer was wrong?");
 				}
 			}
 		});
