@@ -43,5 +43,8 @@ public class Word {
 	private void setDefinitions(List<Definition> definitions) {
 		this.definitions = definitions;
 	}	
-	
+
+	public String toString(){
+		return this.spelling;
+	}
 }

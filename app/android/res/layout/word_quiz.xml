@@ -15,39 +15,45 @@
       android:orientation="vertical" >
 
 <TextView
-	android:id="@+id/widget36"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:text="TextView"
-	android:textColor="@color/black" />
+    android:id="@+id/quiz_definition"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:layout_marginTop="20dp"
+    android:text="TextView"
+    android:textColor="@color/black" />
+
 <RadioGroup
-	android:id="@+id/widget37"
+	android:id="@+id/quiz_answers"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content">
 <RadioButton
-	android:id="@+id/widget39"
+	android:id="@+id/quiz_answer_1"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:text="RadioButton"
 	android:textColor="@color/black" />
 <RadioButton
-	android:id="@+id/widget40"
+	android:id="@+id/quiz_answer_2"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:text="RadioButton"
 	android:textColor="@color/black" />
 <RadioButton
-	android:id="@+id/widget41"
+	android:id="@+id/quiz_answer_3"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:text="RadioButton"
 	android:textColor="@color/black" />
 </RadioGroup>
+
 <Button
-	android:id="@+id/widget42"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:text="Button" />
+    android:id="@+id/quiz_submit"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:text="Submit" />
+
 </LinearLayout>
     
 

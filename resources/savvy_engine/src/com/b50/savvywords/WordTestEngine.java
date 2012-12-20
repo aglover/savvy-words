@@ -16,19 +16,17 @@ public class WordTestEngine {
 		this.words = new LinkedList<Word>(words);
 	}
 	
-	public void startTest(){
+	public void randomizeWords(){
 		Collections.shuffle(this.words, new Random(System.currentTimeMillis()));
 	}
 	
-	public TestableWord getRandomTestableWord(){
+	public TestableWord getTestableWord(){
 		Word word = this.words.removeFirst();
 		this.words.addLast(word);
-		
 		List<Word> throwOffs = new LinkedList<Word>();
-		for(int x = 1; x > 4; x++){
+		for(int x = 0; x <= 3; x++){
 			throwOffs.add(this.words.get(x));
 		}
-		
 		return TestableWord.manufacture(word, throwOffs);
 	}
 }

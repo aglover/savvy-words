@@ -16,11 +16,11 @@ public class WordStudyEngine {
 		this.words = new LinkedList<Word>(words);
 	}
 
-	public void startStudy() {
+	public void randomizeStudy() {
 		Collections.shuffle(this.words, new Random(System.currentTimeMillis()));
 	}
 
-	public Word getRandomWord() {
+	public Word getWord() {
 		Word word = this.words.removeFirst();
 		this.words.addLast(word);
 		return word;

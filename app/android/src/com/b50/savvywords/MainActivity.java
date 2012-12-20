@@ -1,7 +1,6 @@
 package com.b50.savvywords;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +8,9 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.b50.savvywords.R;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -23,17 +20,17 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-	private WordEngine engine;
+	private static WordStudyEngine engine;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.word_study);
 
-		this.engine = initalizeEngine();
-		this.engine.startStudy();
+		MainActivity.engine = initalizeEngine();
+		MainActivity.engine.randomizeStudy();
 		
-		Word startingWord = this.engine.getRandomWord();
+		Word startingWord = MainActivity.engine.getWord();
 		
 		TextView wordSpelling = (TextView)findViewById(R.id.word_study_word);
 		wordSpelling.setText(startingWord.getSpelling());
@@ -50,11 +47,9 @@ public class MainActivity extends Activity {
 
 	private OnClickListener quizButtonAction() {
 		return new View.OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(),
-						QuizActivity.class);
+				Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
 				startActivity(intent);
 			}
 		};
@@ -65,7 +60,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Word nextWord = engine.getRandomWord();
+				Word nextWord = engine.getWord();
 				TextView word = (TextView) findViewById(R.id.word_study_word);
 				word.setText(nextWord.getSpelling());
 				TextView def = (TextView) findViewById(R.id.word_study_definition);							
@@ -89,15 +84,14 @@ public class MainActivity extends Activity {
 		return buff.toString();
 	}
 
-	private WordEngine initalizeEngine() {
+	private WordStudyEngine initalizeEngine() {
 		String fileContents = null;
 		List<Word> words = null;
 		try {
-			InputStream in = getApplicationContext().getResources()
-					.openRawResource(R.raw.words);
-			InputStreamReader is = new InputStreamReader(in);
+
 			StringBuilder sb = new StringBuilder();
-			BufferedReader br = new BufferedReader(is);
+			BufferedReader br = new BufferedReader(
+					new InputStreamReader(getApplicationContext().getResources().openRawResource(R.raw.words)));
 			String read = br.readLine();
 
 			while (read != null) {
@@ -116,7 +110,7 @@ public class MainActivity extends Activity {
 		} catch (Exception e) {
 			Log.e("SavvyWords", "Exception in getInstance for WordEngine: " + e.getLocalizedMessage());
 		}
-		return WordEngine.getInstance(words);
+		return WordStudyEngine.getInstance(words);
 	}
 
 	@Override

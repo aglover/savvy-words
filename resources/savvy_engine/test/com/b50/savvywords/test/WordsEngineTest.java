@@ -2,6 +2,7 @@ package com.b50.savvywords.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.b50.savvywords.TestableWord;
@@ -26,9 +28,9 @@ public class WordsEngineTest {
 		List<Word> words = this.getABunchOfWords();
 		WordTestEngine instance = WordTestEngine.getInstance(words);
 		assertNotNull(instance);
-		instance.startTest();
+		instance.randomizeWords();
 
-		TestableWord testWord1 = instance.getRandomTestableWord();
+		TestableWord testWord1 = instance.getTestableWord();
 		assertNotNull(testWord1);
 
 		String word = testWord1.getSpelling();
@@ -38,6 +40,12 @@ public class WordsEngineTest {
 
 		List<String> incorrectWords = testWord1.getInvalidWordAnswers();
 		assertNotNull(incorrectWords);
+		assertTrue(incorrectWords.size() >= 3);
+		for(String iword: incorrectWords){
+			if(iword.equalsIgnoreCase(word)){
+				Assert.fail("incorrect word: " + iword + " equaled word: " + word);
+			}
+		}
 	}
 
 	@Test
@@ -46,12 +54,12 @@ public class WordsEngineTest {
 		WordStudyEngine instance = WordStudyEngine.getInstance(words);
 		assertNotNull(instance);
 
-		instance.startStudy();
-		Word firstWord = instance.getRandomWord();
+		instance.randomizeStudy();
+		Word firstWord = instance.getWord();
 		assertNotNull(firstWord);
-		Word secondWord = instance.getRandomWord();
+		Word secondWord = instance.getWord();
 		assertNotNull(secondWord);
-		Word thirdWord = instance.getRandomWord();
+		Word thirdWord = instance.getWord();
 		assertNotNull(thirdWord);
 
 		assertEquals(false,
@@ -62,7 +70,7 @@ public class WordsEngineTest {
 				thirdWord.getSpelling().equals(secondWord.getSpelling()));
 
 		for (int x = 0; x < 20; x++) {
-			assertNotNull(instance.getRandomWord());
+			assertNotNull(instance.getWord());
 		}
 
 		assertEquals(5, instance.wordsInTest());

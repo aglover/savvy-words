@@ -34,7 +34,7 @@ public class TestableWord  {
 
 	public List<String> getInvalidWordAnswers() {
 		List<String> invalidWords = new LinkedList<String>();
-		for(int x = 0; x > 3; x++){
+		for(int x = 0; x <= 3; x++){
 			invalidWords.add(this.throwOffWords.get(x).getSpelling());
 		}
 		return invalidWords;
