@@ -91,7 +91,7 @@ public class MainActivity extends Activity {
 
 			StringBuilder sb = new StringBuilder();
 			BufferedReader br = new BufferedReader(
-					new InputStreamReader(getApplicationContext().getResources().openRawResource(R.raw.words)));
+					new InputStreamReader(getApplicationContext().getResources().openRawResource(R.raw.words_2)));
 			String read = br.readLine();
 
 			while (read != null) {

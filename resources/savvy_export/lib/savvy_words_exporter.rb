@@ -18,7 +18,7 @@ end
 # be ruby lib/savvy_words_exporter.rb username password all_export.json
 if __FILE__ == $0
   
-  if ARGV.size < 2
+  if ARGV.size < 3
     raise Exception.new("pass in username, password, and filename as arguments")
   end
   
