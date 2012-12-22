@@ -1,0 +1,17 @@
+source :rubygems
+
+gem 'mongo', '>= 1.6.2'
+gem 'bson_ext'
+gem 'test-unit'
+gem 'json'
+gem 'activesupport'
+gem 'shoulda'
+gem 'shoulda-context'
+gem 'mocha'
+gem 'rake'
+
+group :development do
+  gem 'guard-test'
+  gem 'growl'
+  gem 'rb-fsevent', '~> 0.9.1'
+end

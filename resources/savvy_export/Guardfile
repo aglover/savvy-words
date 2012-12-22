@@ -1,0 +1,8 @@
+# if you need growlnotify for OSX 10.6, follow this link: https://gist.github.com/1409594
+
+guard :test do
+  watch(%r{^lib/(.+)\.rb$})     { |m| "test/#{m[1]}_test.rb" }
+  watch(%r{^test/.+_test\.rb$})
+  watch('Gemfile')
+  watch('Gemfile.lock')
+end
