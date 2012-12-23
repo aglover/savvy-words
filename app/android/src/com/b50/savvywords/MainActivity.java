@@ -34,6 +34,12 @@ public class MainActivity extends Activity {
 		
 		TextView wordSpelling = (TextView)findViewById(R.id.word_study_word);
 		wordSpelling.setText(startingWord.getSpelling());
+		
+		Definition firstDef = startingWord.getDefinitions().get(0);
+		
+		TextView wordPartOfSpeech = (TextView)findViewById(R.id.word_study_part_of_speech);
+		wordPartOfSpeech.setText(firstDef.getPartOfSpeech());
+		
 		TextView wordDefinition = (TextView)findViewById(R.id.word_study_definition);
 		wordDefinition.setText(formatDefinition(startingWord));
 
@@ -63,6 +69,9 @@ public class MainActivity extends Activity {
 				Word nextWord = engine.getWord();
 				TextView word = (TextView) findViewById(R.id.word_study_word);
 				word.setText(nextWord.getSpelling());
+				Definition firstDef = nextWord.getDefinitions().get(0);				
+				TextView wordPartOfSpeech = (TextView)findViewById(R.id.word_study_part_of_speech);
+				wordPartOfSpeech.setText(firstDef.getPartOfSpeech());
 				TextView def = (TextView) findViewById(R.id.word_study_definition);							
 				def.setText(formatDefinition(nextWord));
 			}
@@ -70,16 +79,13 @@ public class MainActivity extends Activity {
 	}
 
 	private String formatDefinition(Word startingWord) {
-		List<Definition> definitions = startingWord.getDefinitions();
-		StringBuffer buff = new StringBuffer();
-		int count = 1;
-		for(Definition definition: definitions){
-			buff.append(count++);
-			buff.append(". ");
-			buff.append(definition.getPartOfSpeech());
-			buff.append(" - ");
-			buff.append(definition.getDefinition());
-			buff.append("\n\n");
+		String definition = startingWord.getDefinitions().get(0).getDefinition();
+		String firstChar = definition.substring(0, 1).toUpperCase();
+		
+		StringBuffer buff = new StringBuffer(firstChar);
+		buff.append(definition.substring(1, (definition.length() +0)));		
+		if(!definition.endsWith(".")){
+			buff.append(".");
 		}
 		return buff.toString();
 	}

@@ -24,6 +24,17 @@
     android:textSize="24dp" />
 
 <TextView
+    android:id="@+id/word_study_part_of_speech"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:text="Part of Speech"
+    android:textColor="@color/black" />
+
+<TextView
     android:id="@+id/word_study_definition"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
