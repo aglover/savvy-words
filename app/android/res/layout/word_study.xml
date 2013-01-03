@@ -8,7 +8,7 @@
 	android:id="@+id/widget33"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:background="@color/white"
+	android:background="#eee9e9"
 	android:orientation="vertical"
 >
 
@@ -21,7 +21,7 @@
     android:layout_marginTop="5dp"
     android:text="Word"
     android:textColor="@color/black"
-    android:textSize="24dp" />
+    android:textSize="24sp" />
 
 <TextView
     android:id="@+id/word_study_part_of_speech"

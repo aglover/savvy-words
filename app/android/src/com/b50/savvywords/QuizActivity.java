@@ -16,6 +16,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -37,7 +39,7 @@ public class QuizActivity extends Activity {
 
 		final TestableWord firstWord = QuizActivity.engine.getTestableWord();
 		TextView testDefinition = (TextView) findViewById(R.id.quiz_definition);
-		testDefinition.setText(firstWord.getValidDefinition());
+		testDefinition.setText(formatDefinition(firstWord.getValidDefinition()));
 
 		List<String> possibleAnswers = Arrays.asList(firstWord
 				.getInvalidWordAnswers().get(0), firstWord
@@ -85,10 +87,20 @@ public class QuizActivity extends Activity {
 							result.setText("");
 						}
 					}, 2000);
-
 				}
 			}
 		});
+	}
+	
+	private String formatDefinition(String definition) {
+		String firstChar = definition.substring(0, 1).toUpperCase();
+		
+		StringBuffer buff = new StringBuffer(firstChar);
+		buff.append(definition.substring(1, (definition.length() +0)));		
+		if(!definition.endsWith(".")){
+			buff.append(".");
+		}
+		return buff.toString();
 	}
 
 	private WordTestEngine initalizeEngine() {
@@ -97,8 +109,7 @@ public class QuizActivity extends Activity {
 		try {
 			StringBuilder sb = new StringBuilder();
 			BufferedReader br = new BufferedReader(new InputStreamReader(
-					getApplicationContext().getResources().openRawResource(
-							R.raw.words)));
+					getApplicationContext().getResources().openRawResource(R.raw.words_2)));
 			String read = br.readLine();
 
 			while (read != null) {
@@ -115,10 +126,25 @@ public class QuizActivity extends Activity {
 			}
 
 		} catch (Exception e) {
-			Log.e("SavvyWords",
-					"Exception in getInstance for WordEngine: "
-							+ e.getLocalizedMessage());
+			Log.e("SavvyWords", "Exception in getInstance for WordEngine: " + e.getLocalizedMessage());
 		}
 		return WordTestEngine.getInstance(words);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_quiz, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.back:
+			this.finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }

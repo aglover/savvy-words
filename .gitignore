@@ -7,3 +7,4 @@ bin/
 vendor/
 all_export.json
 .bundle/
+resources/savvy_engine/target/

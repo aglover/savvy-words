@@ -22,11 +22,19 @@ public class WordTestEngine {
 	
 	public TestableWord getTestableWord(){
 		Word word = this.words.removeFirst();
-		this.words.addLast(word);
+		List<Word> tempWords = randomizedCopyOfWords();
+		
 		List<Word> throwOffs = new LinkedList<Word>();
 		for(int x = 0; x <= 3; x++){
-			throwOffs.add(this.words.get(x));
+			throwOffs.add(tempWords.get(x));
 		}
+		this.words.addLast(word);
 		return TestableWord.manufacture(word, throwOffs);
+	}
+
+	private List<Word> randomizedCopyOfWords() {
+		List<Word> tempWords = new LinkedList<Word>(this.words);
+		Collections.shuffle(tempWords, new Random(System.currentTimeMillis()));
+		return tempWords;
 	}
 }
