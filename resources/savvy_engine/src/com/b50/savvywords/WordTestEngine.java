@@ -37,4 +37,8 @@ public class WordTestEngine {
 		Collections.shuffle(tempWords, new Random(System.currentTimeMillis()));
 		return tempWords;
 	}
+
+	public int wordsInTest() {
+		return this.words.size();
+	}
 }

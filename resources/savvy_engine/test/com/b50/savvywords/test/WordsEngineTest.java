@@ -46,6 +46,9 @@ public class WordsEngineTest {
 				Assert.fail("incorrect word: " + iword + " equaled word: " + word);
 			}
 		}
+		
+		assertNotNull(instance.wordsInTest());
+		assertEquals(5, instance.wordsInTest());
 	}
 
 	@Test
@@ -73,7 +76,7 @@ public class WordsEngineTest {
 			assertNotNull(instance.getWord());
 		}
 
-		assertEquals(5, instance.wordsInTest());
+		assertEquals(5, instance.wordsInStudy());
 
 	}
 

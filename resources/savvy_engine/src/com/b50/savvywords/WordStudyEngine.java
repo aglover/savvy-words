@@ -26,7 +26,7 @@ public class WordStudyEngine {
 		return word;
 	}
 
-	public int wordsInTest() {
+	public int wordsInStudy() {
 		return this.words.size();
 	}
 }
