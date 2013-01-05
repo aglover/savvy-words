@@ -4,7 +4,13 @@
     <string name="app_name">Savvy Words</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+
+    <string name="definition">Definition</string>
+    <string name="next_word">Next word</string>
+    <string name="part_of_speech">Part of Speech</string>
+    <string name="take_quiz">Take quiz</string>
 
 </resources>

@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,25 +22,24 @@ public class QuizActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.word_quiz);
 		
-		if (QuizActivity.engine == null) {
+		if (engine == null) {
 			Log.d("SavvyWords", "engine was null");
-			QuizActivity.engine = initalizeEngine();
+			engine = initalizeEngine();
 		}
 
-		final TestableWord firstWord = QuizActivity.engine.getTestableWord();
-		TextView testDefinition = textViewFor(R.id.quiz_definition);
+		final TestableWord firstWord = engine.getTestableWord();
+		final TextView testDefinition = textViewFor(R.id.quiz_definition);
 		testDefinition.setText(this.wordEngineFacade.formatDefinition(firstWord.getValidDefinition()));
 
-		List<String> possibleAnswers = this.wordEngineFacade.possibleAnswersFrom(firstWord);
+		final List<String> possibleAnswers = this.wordEngineFacade.possibleAnswersFrom(firstWord);
 
-		int[] radios = { R.id.quiz_answer_1, R.id.quiz_answer_2,
-				R.id.quiz_answer_3 };
+		final int[] radios = { R.id.quiz_answer_1, R.id.quiz_answer_2, R.id.quiz_answer_3 };
 		for (int x = 0; x < radios.length; x++) {
-			RadioButton rButton = radioButtonFor(radios[x]);
+			final RadioButton rButton = radioButtonFor(radios[x]);
 			rButton.setText(possibleAnswers.get(x));
 		}
 
-		RadioGroup group = (RadioGroup) findViewById(R.id.quiz_answers);
+		final RadioGroup group = radioGrpFor(R.id.quiz_answers);
 		group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -53,11 +51,10 @@ public class QuizActivity extends BaseActivity {
 					final TextView result = textViewFor(R.id.quiz_result);
 					result.setTextColor(Color.parseColor("#228b22"));
 					result.setText("Correct!");
-					Handler handler = new Handler();
+					final Handler handler = new Handler();
 					handler.postDelayed(new Runnable() {
 						public void run() {
-							Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
-							startActivity(intent);
+							startActivity(new Intent(getApplicationContext(), QuizActivity.class));
 							result.setText("");
 							finish();
 						}
@@ -66,7 +63,7 @@ public class QuizActivity extends BaseActivity {
 					final TextView result = textViewFor(R.id.quiz_result);
 					result.setTextColor(Color.parseColor("#ff0000"));
 					result.setText("Nope, that's not it! Try again.");
-					Handler handler = new Handler();
+					final Handler handler = new Handler();
 					handler.postDelayed(new Runnable() {
 						public void run() {
 							selected.setChecked(false);
@@ -84,10 +81,8 @@ public class QuizActivity extends BaseActivity {
 		return WordTestEngine.getInstance(words);
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_quiz, menu);
-		return true;
+	protected int menuResource(){
+		return R.menu.activity_quiz;
 	}
 	
 	@Override
