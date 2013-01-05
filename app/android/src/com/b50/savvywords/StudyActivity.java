@@ -59,10 +59,6 @@ public class StudyActivity extends BaseActivity {
 		return WordStudyEngine.getInstance(words);
 	}
 	
-	protected int menuResource(){
-		return R.menu.activity_main;
-	}
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -73,7 +69,11 @@ public class StudyActivity extends BaseActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
+	
+	protected int menuResource(){
+		return R.menu.activity_main;
+	}
+	
 	private void displayWordDetails(final Word aWord) {
 		
 		final TextView wordView = textViewFor(R.id.word_study_word);
