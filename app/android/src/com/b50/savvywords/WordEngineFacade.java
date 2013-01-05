@@ -16,7 +16,7 @@ import android.util.Log;
 
 public class WordEngineFacade {
 	
-	public List<Word> buildWordsFromResource(InputStream resource){
+	public List<Word> buildWordsFromResource(final InputStream resource){
 		String fileContents = null;
 		List<Word> words = null;
 		try {
@@ -33,8 +33,7 @@ public class WordEngineFacade {
 			JSONArray allWords = document.getJSONArray("words");
 			words = new ArrayList<Word>();
 			for (int i = 0; i < allWords.length(); i++) {
-				Word word = Word.manufacture(allWords.getJSONObject(i));
-				words.add(word);
+				words.add(Word.manufacture(allWords.getJSONObject(i)));
 			}
 
 		} catch (Exception e) {
@@ -43,7 +42,7 @@ public class WordEngineFacade {
 		return words;
 	}
 	
-	public List<String> possibleAnswersFrom(TestableWord word){
+	public List<String> possibleAnswersFrom(final TestableWord word){
 		List<String> possibleAnswers = Arrays.asList(
 				word.getInvalidWordAnswers().get(0), 
 				word.getInvalidWordAnswers().get(1), 
@@ -53,11 +52,11 @@ public class WordEngineFacade {
 		return possibleAnswers;
 	}
 	
-	public String formatDefinition(Word startingWord) {
+	public String formatDefinition(final Word startingWord) {
 		return formatDefinition(startingWord.getDefinitions().get(0).getDefinition());
 	}
 	
-	public String formatDefinition(String definition) {
+	public String formatDefinition(final String definition) {
 		String firstChar = definition.substring(0, 1).toUpperCase(Locale.ENGLISH);
 		StringBuffer buff = new StringBuffer(firstChar);
 		buff.append(definition.substring(1, (definition.length() +0)));		
