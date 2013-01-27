@@ -39,6 +39,7 @@ public class WordEngineFacade {
 		} catch (Exception e) {
 			Log.e("SavvyWords", "Exception in getInstance for WordEngine: " + e.getLocalizedMessage());
 		}
+		Collections.shuffle(words);
 		return words;
 	}
 	
