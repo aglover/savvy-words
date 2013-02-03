@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -16,14 +15,25 @@ import android.widget.TextView;
 public class QuizActivity extends BaseActivity {
 
 	private static WordTestEngine engine;
+	private int quizNumber;
+	final private String QUIZ_NUM = "quiz_num";
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.word_quiz);
 		
+		final Bundle previous = getIntent().getExtras();
+		quizNumber = (previous != null) ? previous.getInt(QUIZ_NUM) : 1;
+		
+		if(quizNumber > 10){
+			//pop up a dialog to say great job and start over?
+		}
+		
+		final TextView quizCounter = textViewFor(R.id.quiz_number);
+		quizCounter.setText(quizNumber + "/10");
+		
 		if (engine == null) {
-			Log.d("SavvyWords", "engine was null");
 			engine = initalizeEngine();
 		}
 
@@ -46,7 +56,6 @@ public class QuizActivity extends BaseActivity {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				final RadioButton selected = radioButtonFor(checkedId);
 				final String answer = (String) selected.getText();
-				Log.d("SavvyWords", "value obtained is " + answer);
 				if (answer.equals(firstWord.getSpelling())) {
 					final TextView result = textViewFor(R.id.quiz_result);
 					result.setTextColor(Color.parseColor("#228b22"));
@@ -54,7 +63,9 @@ public class QuizActivity extends BaseActivity {
 					final Handler handler = new Handler();
 					handler.postDelayed(new Runnable() {
 						public void run() {
-							startActivity(new Intent(getApplicationContext(), QuizActivity.class));
+							final Intent nextQuiz = new Intent(getApplicationContext(), QuizActivity.class);
+							nextQuiz.putExtra(QUIZ_NUM, ++quizNumber);
+							startActivity(nextQuiz);
 							result.setText("");
 							finish();
 						}
@@ -77,7 +88,7 @@ public class QuizActivity extends BaseActivity {
 
 	private WordTestEngine initalizeEngine() {
 		List<Word> words = this.wordEngineFacade.
-				buildWordsFromResource(getApplicationContext().getResources().openRawResource(R.raw.words_2));
+				buildWordsFromResource(getApplicationContext().getResources().openRawResource(R.raw.words));
 		return WordTestEngine.getInstance(words);
 	}
 	

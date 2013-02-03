@@ -55,7 +55,7 @@ public class StudyActivity extends BaseActivity {
 
 	private WordStudyEngine initalizeEngine() {
 		final List<Word> words = this.wordEngineFacade.
-				buildWordsFromResource(getApplicationContext().getResources().openRawResource(R.raw.words_2));
+				buildWordsFromResource(getApplicationContext().getResources().openRawResource(R.raw.words));
 		return WordStudyEngine.getInstance(words);
 	}
 	
