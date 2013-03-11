@@ -34,7 +34,6 @@ public class StudyActivity extends BaseActivity {
 
 		final Button quizButton = buttonFor(R.id.take_quiz);
 		quizButton.setOnClickListener(quizButtonAction());
-
 	}
 			
 	private OnClickListener quizButtonAction() {
@@ -54,8 +53,7 @@ public class StudyActivity extends BaseActivity {
 	}
 
 	private WordStudyEngine initalizeEngine() {
-		final List<Word> words = this.wordEngineFacade.
-				buildWordsFromResource(getApplicationContext().getResources().openRawResource(R.raw.words));
+		final List<Word> words = this.manufactureWordList(R.raw.words_2);
 		return WordStudyEngine.getInstance(words);
 	}
 	

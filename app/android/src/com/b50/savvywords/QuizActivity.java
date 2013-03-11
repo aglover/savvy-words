@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class QuizActivity extends BaseActivity {
 
@@ -27,7 +28,9 @@ public class QuizActivity extends BaseActivity {
 		quizNumber = (previous != null) ? previous.getInt(QUIZ_NUM) : 1;
 		
 		if(quizNumber > 10){
-			//pop up a dialog to say great job and start over?
+			quizNumber = 1;
+			CharSequence text = "Great Job! You made it through 10 questions. Here's another 10!";
+			Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();			
 		}
 		
 		final TextView quizCounter = textViewFor(R.id.quiz_number);
@@ -87,8 +90,7 @@ public class QuizActivity extends BaseActivity {
 	}
 
 	private WordTestEngine initalizeEngine() {
-		List<Word> words = this.wordEngineFacade.
-				buildWordsFromResource(getApplicationContext().getResources().openRawResource(R.raw.words));
+		final List<Word> words = this.manufactureWordList(R.raw.words_2);
 		return WordTestEngine.getInstance(words);
 	}
 	

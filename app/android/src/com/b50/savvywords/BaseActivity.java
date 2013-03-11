@@ -1,5 +1,7 @@
 package com.b50.savvywords;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -15,6 +17,11 @@ public abstract class BaseActivity extends Activity {
 	protected static Typeface handWritingFont;
 
 	abstract protected int menuResource();
+	
+	protected List<Word> manufactureWordList(int wordFile){
+		return this.wordEngineFacade.
+				buildWordsFromResource(getApplicationContext().getResources().openRawResource(wordFile));
+	}
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
