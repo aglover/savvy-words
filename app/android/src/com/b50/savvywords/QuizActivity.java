@@ -2,11 +2,19 @@ package com.b50.savvywords;
 
 import java.util.List;
 
+import com.b50.gesticulate.SwipeDetector;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.View.OnClickListener;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -18,7 +26,8 @@ public class QuizActivity extends BaseActivity {
 	private static WordTestEngine engine;
 	private int quizNumber;
 	final private String QUIZ_NUM = "quiz_num";
-
+	private GestureDetector gestureDetector;
+	
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,8 +96,42 @@ public class QuizActivity extends BaseActivity {
 				}
 			}
 		});
+		
+		gestureDetector = initGestureDetector();
+
+		View view = findViewById(R.id.widget33);
+
+		view.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+			}
+		});
+
+		view.setOnTouchListener(new View.OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				return gestureDetector.onTouchEvent(event);
+			}
+		});
 	}
 
+	private GestureDetector initGestureDetector() {
+		return new GestureDetector(new SimpleOnGestureListener() {
+
+			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+				try {
+					final SwipeDetector detector = new SwipeDetector(e1, e2, velocityX, velocityY);
+					if (detector.isDownSwipe()) {
+						finish();
+					} else {
+						return false;
+					}
+				} catch (Exception e) {
+					// nothing
+				}
+				return false;
+			}			
+		});
+	}
+	
 	private WordTestEngine initalizeEngine() {
 		final List<Word> words = this.manufactureWordList(R.raw.words_2);
 		return WordTestEngine.getInstance(words);

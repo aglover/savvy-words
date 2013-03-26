@@ -1,6 +1,7 @@
 package com.b50.savvywords;
 
 import java.util.List;
+import java.util.Stack;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.b50.gesticulate.SwipeDetector;
 
@@ -20,6 +20,7 @@ public class StudyActivity extends BaseActivity {
 
 	private static WordStudyEngine engine;
 	private GestureDetector gestureDetector;
+	private static Stack<Word> wordStack;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +31,15 @@ public class StudyActivity extends BaseActivity {
 			Log.d("SavvyWords", "study engine was null");
 			engine = initalizeEngine();
 		}
+		
+		if (wordStack == null){
+			Log.d("SavvyWords", "Word was null");
+			wordStack = new Stack<Word>();
+		}
 
 		engine.randomizeStudy();
-
+		
+		//display FIRST word	
 		displayWordDetails(engine.getWord());
 
 		gestureDetector = initGestureDetector();
@@ -54,32 +61,29 @@ public class StudyActivity extends BaseActivity {
 	private GestureDetector initGestureDetector() {
 		return new GestureDetector(new SimpleOnGestureListener() {
 
-			public boolean onFling(MotionEvent e1, MotionEvent e2,
-					float velocityX, float velocityY) {
+			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 				try {
-					final SwipeDetector detector = new SwipeDetector(e1, e2,
-							velocityX, velocityY);
+					final SwipeDetector detector = new SwipeDetector(e1, e2, velocityX, velocityY);
 					if (detector.isDownSwipe()) {
 						return false;
 					} else if (detector.isUpSwipe()) {
-						startActivity(new Intent(getApplicationContext(),
-								QuizActivity.class));
+						startActivity(new Intent(getApplicationContext(), QuizActivity.class));
 					} else if (detector.isLeftSwipe()) {
-						displayWordDetails(engine.getWord());
+						displayWordDetails(engine.getWord());						
 					} else if (detector.isRightSwipe()) {
-						showToast("Right Swipe");
-//						displayWordDetails(engine.getWord());
+						if(wordStack.size() > 1){
+						  wordStack.pop(); //throw off top element
+						  displayWordDetails(wordStack.pop());
+						}else{
+							Log.d("SavvyWords", "isRightSwipe returning false");
+							return false; //can't go backwards as there isn't anything on the stack
+						}
 					}
 				} catch (Exception e) {
 					// nothing
 				}
 				return false;
-			}
-
-			private void showToast(String phrase) {
-				Toast.makeText(getApplicationContext(), phrase,
-						Toast.LENGTH_SHORT).show();
-			}
+			}			
 		});
 	}
 	
@@ -104,7 +108,8 @@ public class StudyActivity extends BaseActivity {
 	}
 
 	private void displayWordDetails(final Word aWord) {
-
+		wordStack.push(aWord);
+		Log.d("SavvyWords", "displayWordDetails invoked with word " + aWord);
 		final TextView wordView = textViewFor(R.id.word_study_word);
 		wordView.setText(aWord.getSpelling());
 

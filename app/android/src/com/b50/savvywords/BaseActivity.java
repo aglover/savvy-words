@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public abstract class BaseActivity extends Activity {
 	
@@ -54,7 +55,11 @@ public abstract class BaseActivity extends Activity {
 		getMenuInflater().inflate(menuResource(), menu);
 		return true;
 	}
-		
+	
+	public void showToast(String phrase) {
+		Toast.makeText(getApplicationContext(), phrase, Toast.LENGTH_SHORT).show();
+	}
+	
 	protected Typeface getFont() {
 		if (handWritingFont == null) {
 			handWritingFont = Typeface.createFromAsset(getAssets(), "ShortStack-Regular.otf");
