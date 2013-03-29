@@ -5,14 +5,19 @@ import java.util.Stack;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.b50.gesticulate.SwipeDetector;
 
@@ -31,15 +36,15 @@ public class StudyActivity extends BaseActivity {
 			Log.d("SavvyWords", "study engine was null");
 			engine = initalizeEngine();
 		}
-		
-		if (wordStack == null){
+
+		if (wordStack == null) {
 			Log.d("SavvyWords", "Word was null");
 			wordStack = new Stack<Word>();
 		}
 
 		engine.randomizeStudy();
-		
-		//display FIRST word	
+
+		// display FIRST word
 		displayWordDetails(engine.getWord());
 
 		gestureDetector = initGestureDetector();
@@ -56,6 +61,24 @@ public class StudyActivity extends BaseActivity {
 				return gestureDetector.onTouchEvent(event);
 			}
 		});
+		this.scheduleHintToast();
+	}
+
+	private void scheduleHintToast() {
+		final Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			public void run() {
+				// now quickly show a how to
+				Toast toast = Toast.makeText(getApplicationContext(),
+						"Swipe left & right to study words. Swipe up to take a quiz!", Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				LinearLayout toastView = (LinearLayout) toast.getView();
+				ImageView imageCodeProject = new ImageView(getApplicationContext());
+				imageCodeProject.setImageResource(R.drawable.swipe_left_right);
+				toastView.addView(imageCodeProject, 0);
+				toast.show();
+			}
+		}, 1500);
 	}
 
 	private GestureDetector initGestureDetector() {
@@ -69,24 +92,25 @@ public class StudyActivity extends BaseActivity {
 					} else if (detector.isUpSwipe()) {
 						startActivity(new Intent(getApplicationContext(), QuizActivity.class));
 					} else if (detector.isLeftSwipe()) {
-						displayWordDetails(engine.getWord());						
+						displayWordDetails(engine.getWord());
 					} else if (detector.isRightSwipe()) {
-						if(wordStack.size() > 1){
-						  wordStack.pop(); //throw off top element
-						  displayWordDetails(wordStack.pop());
-						}else{
+						if (wordStack.size() > 1) {
+							wordStack.pop(); // throw off top element
+							displayWordDetails(wordStack.pop());
+						} else {
 							Log.d("SavvyWords", "isRightSwipe returning false");
-							return false; //can't go backwards as there isn't anything on the stack
+							return false; // can't go backwards as there isn't
+											// anything on the stack
 						}
 					}
 				} catch (Exception e) {
 					// nothing
 				}
 				return false;
-			}			
+			}
 		});
 	}
-	
+
 	private WordStudyEngine initalizeEngine() {
 		final List<Word> words = this.manufactureWordList(R.raw.words_2);
 		return WordStudyEngine.getInstance(words);

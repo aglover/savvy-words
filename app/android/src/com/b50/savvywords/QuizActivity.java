@@ -2,24 +2,26 @@ package com.b50.savvywords;
 
 import java.util.List;
 
-import com.b50.gesticulate.SwipeDetector;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.b50.gesticulate.SwipeDetector;
 
 public class QuizActivity extends BaseActivity {
 
@@ -27,24 +29,24 @@ public class QuizActivity extends BaseActivity {
 	private int quizNumber;
 	final private String QUIZ_NUM = "quiz_num";
 	private GestureDetector gestureDetector;
-	
+
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.word_quiz);
-		
+
 		final Bundle previous = getIntent().getExtras();
 		quizNumber = (previous != null) ? previous.getInt(QUIZ_NUM) : 1;
-		
-		if(quizNumber > 10){
+
+		if (quizNumber > 10) {
 			quizNumber = 1;
 			CharSequence text = "Great Job! You made it through 10 questions. Here's another 10!";
-			Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();			
+			Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
 		}
-		
+
 		final TextView quizCounter = textViewFor(R.id.quiz_number);
 		quizCounter.setText(quizNumber + "/10");
-		
+
 		if (engine == null) {
 			engine = initalizeEngine();
 		}
@@ -96,7 +98,7 @@ public class QuizActivity extends BaseActivity {
 				}
 			}
 		});
-		
+
 		gestureDetector = initGestureDetector();
 
 		View view = findViewById(R.id.widget33);
@@ -111,6 +113,26 @@ public class QuizActivity extends BaseActivity {
 				return gestureDetector.onTouchEvent(event);
 			}
 		});
+		
+		this.scheduleHintToast();
+	}
+
+	private void scheduleHintToast() {
+		final Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			public void run() {
+				// now quickly show a how to
+				Toast toast = Toast.makeText(getApplicationContext(), "Swipe down to get back to studying.",
+						Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				LinearLayout toastView = (LinearLayout) toast.getView();
+				ImageView imageCodeProject = new ImageView(getApplicationContext());
+				imageCodeProject.setImageResource(R.drawable.swipe_left_right);
+				toastView.addView(imageCodeProject, 0);
+				toast.show();
+
+			}
+		}, 1000);
 	}
 
 	private GestureDetector initGestureDetector() {
@@ -128,19 +150,19 @@ public class QuizActivity extends BaseActivity {
 					// nothing
 				}
 				return false;
-			}			
+			}
 		});
 	}
-	
+
 	private WordTestEngine initalizeEngine() {
 		final List<Word> words = this.manufactureWordList(R.raw.words_2);
 		return WordTestEngine.getInstance(words);
 	}
-	
-	protected int menuResource(){
+
+	protected int menuResource() {
 		return R.menu.activity_quiz;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
