@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -26,29 +25,35 @@ public class SettingsActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.word_settings);
-		
+
 		TextView textView = textViewFor(R.id.settings_description);
 		textView.setText(R.string.settings);
-		
+
 		final ListView listView = listViewFor(R.id.words_list);
+
 		String[] values = new String[] { "Level 1 (Default)", "Level 2" };
+		final int[] mappedResource = new int[] { R.raw.words, R.raw.words_2 };
+
 		ListAdapter adpter = new TypefacedAdaptor(this.getApplicationContext(), values);
 		listView.setAdapter(adpter);
-		
+
 		listView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			    // When clicked, show a toast with the TextView text
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {				
 				String level = ((TextView) view).getText().toString();
-				Toast.makeText(getApplicationContext(),
-				level, Toast.LENGTH_SHORT).show();
-				if(level.equalsIgnoreCase("Level 2")){
-					listView.clearChoices();
-					ListAdapter adpter = new TypefacedAdaptor(getApplicationContext(), new String[] { "Level 1", "Level 2 (selected)" });
-					listView.setAdapter(adpter);
+				int rawFile = mappedResource[position];
+				Toast.makeText(getApplicationContext(), level + " and raw file position is " + rawFile,
+						Toast.LENGTH_SHORT).show();
+				String[] valArray = null;
+				if (level.equalsIgnoreCase("Level 2")) {
+					valArray = new String[] { "Level 1", "Level 2 (selected)" };
+				} else { // must be level 1
+					valArray = new String[] { "Level 1 (selected)", "Level 2" };
 				}
+				listView.clearChoices();
+				listView.setAdapter(new TypefacedAdaptor(getApplicationContext(), valArray));
 			}
 		});
- 
+
 	}
 
 	protected int menuResource() {
@@ -65,21 +70,20 @@ public class SettingsActivity extends BaseActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	public class TypefacedAdaptor extends BaseAdapter{
-		
+
+	public class TypefacedAdaptor extends BaseAdapter {
+
 		private final Context context;
 		private final List<String> values;
 
-		
 		public TypefacedAdaptor(final Context context, final String[] values) {
 			super();
 			this.context = context;
-			this.values = new ArrayList<String>(Arrays.asList(values));;
+			this.values = new ArrayList<String>(Arrays.asList(values));
 		}
 
 		@Override
-		public int getCount() {			
+		public int getCount() {
 			return this.values.size();
 		}
 
@@ -89,24 +93,24 @@ public class SettingsActivity extends BaseActivity {
 		}
 
 		@Override
-		public long getItemId(int arg0) {			
+		public long getItemId(int arg0) {
 			return arg0;
 		}
 
 		@Override
 		public View getView(int position, View view, ViewGroup viewGroup) {
-			LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		    View rowView = inflater.inflate(R.layout.word_settings_text, viewGroup, false);
-		    TextView textView = (TextView) rowView.findViewById(R.id.rowTextView);
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View rowView = inflater.inflate(R.layout.word_settings_text, viewGroup, false);
+			TextView textView = (TextView) rowView.findViewById(R.id.rowTextView);
 
-		    Typeface tf = Typeface.createFromAsset(this.context.getAssets(), "ShortStack-Regular.otf"); 
-		    textView.setTypeface(tf);
-		    textView.setText(values.get(position));
-		    textView.setTextSize(20);
-		    textView.setTextColor(this.context.getResources().getColor(R.color.black));
-		    return rowView;
+			Typeface tf = Typeface.createFromAsset(this.context.getAssets(), "ShortStack-Regular.otf");
+			textView.setTypeface(tf);
+			textView.setText(values.get(position));
+			textView.setTextSize(20);
+			textView.setTextColor(this.context.getResources().getColor(R.color.black));
+			return rowView;
 		}
-		
+
 	}
 
 }
