@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -32,6 +33,11 @@ public abstract class BaseActivity extends Activity {
 	protected TextView textViewFor(final int id) {
 		TextView thing = (TextView) findViewById(id);
 		thing.setTypeface(getFont());
+		return thing;
+	}
+	
+	protected ListView listViewFor(final int id) {
+		ListView thing = (ListView)findViewById(id);
 		return thing;
 	}
 	

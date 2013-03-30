@@ -5,5 +5,9 @@
         android:id="@+id/quit"
         android:icon="@drawable/quit_icon"
         android:title="Quit"/>
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/settings_icon"
+        android:title="Settings"/>
 
 </menu>
