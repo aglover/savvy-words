@@ -29,6 +29,7 @@ public class QuizActivity extends BaseActivity {
 	private int quizNumber;
 	final private String QUIZ_NUM = "quiz_num";
 	private GestureDetector gestureDetector;
+	private static boolean directionsDisplayed = false;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
@@ -113,8 +114,11 @@ public class QuizActivity extends BaseActivity {
 				return gestureDetector.onTouchEvent(event);
 			}
 		});
-		
-		this.scheduleHintToast();
+
+		if (!directionsDisplayed) {
+			this.scheduleHintToast();
+			directionsDisplayed = true;
+		}
 	}
 
 	private void scheduleHintToast() {
