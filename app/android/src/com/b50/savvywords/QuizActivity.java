@@ -25,7 +25,6 @@ import com.b50.gesticulate.SwipeDetector;
 
 public class QuizActivity extends BaseActivity {
 
-	private static WordTestEngine engine;
 	private int quizNumber;
 	final private String QUIZ_NUM = "quiz_num";
 	private GestureDetector gestureDetector;
@@ -46,13 +45,9 @@ public class QuizActivity extends BaseActivity {
 		}
 
 		final TextView quizCounter = textViewFor(R.id.quiz_number);
-		quizCounter.setText(quizNumber + "/10");
+		quizCounter.setText(quizNumber + "/10");		
 
-		if (engine == null) {
-			engine = initalizeEngine();
-		}
-
-		final TestableWord firstWord = engine.getTestableWord();
+		final TestableWord firstWord = testingEngine.getTestableWord();
 		final TextView testDefinition = textViewFor(R.id.quiz_definition);
 		testDefinition.setText(this.wordEngineFacade.formatDefinition(firstWord.getValidDefinition()));
 
@@ -156,11 +151,6 @@ public class QuizActivity extends BaseActivity {
 				return false;
 			}
 		});
-	}
-
-	private WordTestEngine initalizeEngine() {
-		final List<Word> words = this.manufactureWordList(R.raw.words_2);
-		return WordTestEngine.getInstance(words);
 	}
 
 	protected int menuResource() {

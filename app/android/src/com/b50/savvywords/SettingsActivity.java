@@ -17,9 +17,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SettingsActivity extends BaseActivity {
+
+	protected static String[] choices;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,29 +32,39 @@ public class SettingsActivity extends BaseActivity {
 
 		final ListView listView = listViewFor(R.id.words_list);
 
-		String[] values = new String[] { "Level 1 (Default)", "Level 2" };
+		if (choices == null) {
+			choices = new String[] { "Level 1 (Default)", "Level 2" };
+		}
+		
 		final int[] mappedResource = new int[] { R.raw.words, R.raw.words_2 };
 
-		ListAdapter adpter = new TypefacedAdaptor(this.getApplicationContext(), values);
+		ListAdapter adpter = new TypefacedAdaptor(this.getApplicationContext(), choices);
 		listView.setAdapter(adpter);
 
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {				
+		listView.setOnItemClickListener(getClickListener(listView, mappedResource));
+
+	}
+
+	private OnItemClickListener getClickListener(final ListView listView, final int[] mappedResource) {
+		return new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				String level = ((TextView) view).getText().toString();
 				int rawFile = mappedResource[position];
-				Toast.makeText(getApplicationContext(), level + " and raw file position is " + rawFile,
-						Toast.LENGTH_SHORT).show();
-				String[] valArray = null;
+
+				initializeStudyEngineInstance(rawFile);
+				initializeTestingEngineInstance(rawFile);
+
+				showToast("Savvy Words now using " + level);
+
 				if (level.equalsIgnoreCase("Level 2")) {
-					valArray = new String[] { "Level 1", "Level 2 (selected)" };
+					choices = new String[] { "Level 1", "Level 2 (selected)" };
 				} else { // must be level 1
-					valArray = new String[] { "Level 1 (selected)", "Level 2" };
+					choices = new String[] { "Level 1 (selected)", "Level 2" };
 				}
 				listView.clearChoices();
-				listView.setAdapter(new TypefacedAdaptor(getApplicationContext(), valArray));
+				listView.setAdapter(new TypefacedAdaptor(getApplicationContext(), choices));
 			}
-		});
-
+		};
 	}
 
 	protected int menuResource() {

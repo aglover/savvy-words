@@ -1,6 +1,5 @@
 package com.b50.savvywords;
 
-import java.util.List;
 import java.util.Stack;
 
 import android.content.Intent;
@@ -22,8 +21,7 @@ import android.widget.Toast;
 import com.b50.gesticulate.SwipeDetector;
 
 public class StudyActivity extends BaseActivity {
-
-	private static WordStudyEngine engine;
+	
 	private GestureDetector gestureDetector;
 	private static Stack<Word> wordStack;
 
@@ -31,21 +29,16 @@ public class StudyActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.word_study);
-
-		if (engine == null) {
-			Log.d("SavvyWords", "study engine was null");
-			engine = initalizeEngine();
-		}
-
+		
 		if (wordStack == null) {
 			Log.d("SavvyWords", "Word was null");
 			wordStack = new Stack<Word>();
 		}
 
-		engine.randomizeStudy();
+		studyEngine.randomizeStudy();
 
 		// display FIRST word
-		displayWordDetails(engine.getWord());
+		displayWordDetails(studyEngine.getWord());
 
 		gestureDetector = initGestureDetector();
 
@@ -92,7 +85,7 @@ public class StudyActivity extends BaseActivity {
 					} else if (detector.isUpSwipe()) {
 						startActivity(new Intent(getApplicationContext(), QuizActivity.class));
 					} else if (detector.isLeftSwipe()) {
-						displayWordDetails(engine.getWord());
+						displayWordDetails(studyEngine.getWord());
 					} else if (detector.isRightSwipe()) {
 						if (wordStack.size() > 1) {
 							wordStack.pop(); // throw off top element
@@ -109,11 +102,6 @@ public class StudyActivity extends BaseActivity {
 				return false;
 			}
 		});
-	}
-
-	private WordStudyEngine initalizeEngine() {
-		final List<Word> words = this.manufactureWordList(R.raw.words_2);
-		return WordStudyEngine.getInstance(words);
 	}
 
 	@Override
