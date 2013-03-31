@@ -3,7 +3,11 @@ package com.b50.savvywords;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.GestureDetector;
@@ -45,7 +49,7 @@ public class QuizActivity extends BaseActivity {
 		}
 
 		final TextView quizCounter = textViewFor(R.id.quiz_number);
-		quizCounter.setText(quizNumber + "/10");		
+		quizCounter.setText(quizNumber + "/10");
 
 		final TestableWord firstWord = testingEngine.getTestableWord();
 		final TextView testDefinition = textViewFor(R.id.quiz_definition);
@@ -126,10 +130,13 @@ public class QuizActivity extends BaseActivity {
 				toast.setGravity(Gravity.CENTER, 0, 0);
 				LinearLayout toastView = (LinearLayout) toast.getView();
 				ImageView imageCodeProject = new ImageView(getApplicationContext());
-				imageCodeProject.setImageResource(R.drawable.swipe_left_right);
+				Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.swipe_left_right);
+				Matrix mtx = new Matrix();
+				mtx.postRotate(90);
+				imageCodeProject.setImageDrawable(new BitmapDrawable(Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(),
+						bmp.getHeight(), mtx, true)));
 				toastView.addView(imageCodeProject, 0);
 				toast.show();
-
 			}
 		}, 1000);
 	}
