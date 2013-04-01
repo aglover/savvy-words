@@ -27,7 +27,7 @@ public class SettingsActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.word_settings);
 
-		TextView textView = textViewFor(R.id.settings_description);
+		final TextView textView = textViewFor(R.id.settings_description);
 		textView.setText(R.string.settings);
 
 		final ListView listView = listViewFor(R.id.words_list);
@@ -38,7 +38,7 @@ public class SettingsActivity extends BaseActivity {
 		
 		final int[] mappedResource = new int[] { R.raw.words, R.raw.words_2 };
 
-		ListAdapter adpter = new TypefacedAdaptor(this.getApplicationContext(), choices);
+		final ListAdapter adpter = new TypefacedAdaptor(this.getApplicationContext(), choices);
 		listView.setAdapter(adpter);
 
 		listView.setOnItemClickListener(getClickListener(listView, mappedResource));
@@ -48,8 +48,8 @@ public class SettingsActivity extends BaseActivity {
 	private OnItemClickListener getClickListener(final ListView listView, final int[] mappedResource) {
 		return new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				String level = ((TextView) view).getText().toString();
-				int rawFile = mappedResource[position];
+				final String level = ((TextView) view).getText().toString();
+				final int rawFile = mappedResource[position];
 
 				initializeStudyEngineInstance(rawFile);
 				initializeTestingEngineInstance(rawFile);
@@ -72,7 +72,7 @@ public class SettingsActivity extends BaseActivity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.back:
 			this.finish();
@@ -99,17 +99,17 @@ public class SettingsActivity extends BaseActivity {
 		}
 
 		@Override
-		public Object getItem(int arg0) {
+		public Object getItem(final int arg0) {
 			return this.values.get(arg0);
 		}
 
 		@Override
-		public long getItemId(int arg0) {
+		public long getItemId(final int arg0) {
 			return arg0;
 		}
 
 		@Override
-		public View getView(int position, View view, ViewGroup viewGroup) {
+		public View getView(final int position, final View view, final ViewGroup viewGroup) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View rowView = inflater.inflate(R.layout.word_settings_text, viewGroup, false);
 			TextView textView = (TextView) rowView.findViewById(R.id.rowTextView);

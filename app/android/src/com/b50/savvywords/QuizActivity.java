@@ -67,7 +67,7 @@ public class QuizActivity extends BaseActivity {
 		group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
+			public void onCheckedChanged(final RadioGroup group, final int checkedId) {
 				final RadioButton selected = radioButtonFor(checkedId);
 				final String answer = (String) selected.getText();
 				if (answer.equals(firstWord.getSpelling())) {
@@ -101,7 +101,7 @@ public class QuizActivity extends BaseActivity {
 
 		gestureDetector = initGestureDetector();
 
-		View view = findViewById(R.id.widget33);
+		final View view = findViewById(R.id.widget33);
 
 		view.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
@@ -125,13 +125,13 @@ public class QuizActivity extends BaseActivity {
 		handler.postDelayed(new Runnable() {
 			public void run() {
 				// now quickly show a how to
-				Toast toast = Toast.makeText(getApplicationContext(), "Swipe down to get back to studying.",
+				final Toast toast = Toast.makeText(getApplicationContext(), "Swipe down to get back to studying.",
 						Toast.LENGTH_LONG);
 				toast.setGravity(Gravity.CENTER, 0, 0);
-				LinearLayout toastView = (LinearLayout) toast.getView();
-				ImageView imageCodeProject = new ImageView(getApplicationContext());
-				Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.swipe_left_right);
-				Matrix mtx = new Matrix();
+				final LinearLayout toastView = (LinearLayout) toast.getView();
+				final ImageView imageCodeProject = new ImageView(getApplicationContext());
+				final Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.swipe_left_right);
+				final Matrix mtx = new Matrix();
 				mtx.postRotate(90);
 				imageCodeProject.setImageDrawable(new BitmapDrawable(Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(),
 						bmp.getHeight(), mtx, true)));
@@ -165,7 +165,7 @@ public class QuizActivity extends BaseActivity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.back:
 			this.finish();

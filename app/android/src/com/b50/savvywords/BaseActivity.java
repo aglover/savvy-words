@@ -34,17 +34,17 @@ public abstract class BaseActivity extends Activity {
 		}
 	}
 
-	protected void initializeStudyEngineInstance(int rawResource) {
+	protected void initializeStudyEngineInstance(final int rawResource) {
 		studyEngine = initalizeStudyEngine(rawResource);
 	}
 
-	protected void initializeTestingEngineInstance(int rawResource) {
+	protected void initializeTestingEngineInstance(final int rawResource) {
 		testingEngine = initalizeTestingEngine(rawResource);
 	}
 
 	abstract protected int menuResource();
 
-	protected List<Word> manufactureWordList(int wordFile) {
+	protected List<Word> manufactureWordList(final int wordFile) {
 		return this.wordEngineFacade.buildWordsFromResource(
 				getApplicationContext().getResources().openRawResource(wordFile));
 	}
@@ -76,12 +76,12 @@ public abstract class BaseActivity extends Activity {
 		return grp;
 	}
 
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		getMenuInflater().inflate(menuResource(), menu);
 		return true;
 	}
 
-	public void showToast(String phrase) {
+	public void showToast(final String phrase) {
 		Toast.makeText(getApplicationContext(), phrase, Toast.LENGTH_SHORT).show();
 	}
 
@@ -92,12 +92,12 @@ public abstract class BaseActivity extends Activity {
 		return handWritingFont;
 	}
 
-	protected WordStudyEngine initalizeStudyEngine(int wordResource) {
+	protected WordStudyEngine initalizeStudyEngine(final int wordResource) {
 		final List<Word> words = this.manufactureWordList(wordResource);
 		return WordStudyEngine.getInstance(words);
 	}
 
-	private WordTestEngine initalizeTestingEngine(int wordResource) {
+	private WordTestEngine initalizeTestingEngine(final int wordResource) {
 		final List<Word> words = this.manufactureWordList(wordResource);
 		return WordTestEngine.getInstance(words);
 	}

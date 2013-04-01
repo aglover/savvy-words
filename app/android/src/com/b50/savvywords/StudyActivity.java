@@ -42,7 +42,7 @@ public class StudyActivity extends BaseActivity {
 
 		gestureDetector = initGestureDetector();
 
-		View view = findViewById(R.id.widget35);
+		final View view = findViewById(R.id.widget35);
 
 		view.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
@@ -62,11 +62,11 @@ public class StudyActivity extends BaseActivity {
 		handler.postDelayed(new Runnable() {
 			public void run() {
 				// now quickly show a how to
-				Toast toast = Toast.makeText(getApplicationContext(),
+				final Toast toast = Toast.makeText(getApplicationContext(),
 						"Swipe left & right to study words. Swipe up to take a quiz!", Toast.LENGTH_LONG);
 				toast.setGravity(Gravity.CENTER, 0, 0);
-				LinearLayout toastView = (LinearLayout) toast.getView();
-				ImageView imageCodeProject = new ImageView(getApplicationContext());
+				final LinearLayout toastView = (LinearLayout) toast.getView();
+				final ImageView imageCodeProject = new ImageView(getApplicationContext());
 				imageCodeProject.setImageResource(R.drawable.swipe_left_right);
 				toastView.addView(imageCodeProject, 0);
 				toast.show();
@@ -77,7 +77,7 @@ public class StudyActivity extends BaseActivity {
 	private GestureDetector initGestureDetector() {
 		return new GestureDetector(new SimpleOnGestureListener() {
 
-			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+			public boolean onFling(final MotionEvent e1, final MotionEvent e2, final float velocityX, final float velocityY) {
 				try {
 					final SwipeDetector detector = new SwipeDetector(e1, e2, velocityX, velocityY);
 					if (detector.isDownSwipe()) {
@@ -105,7 +105,7 @@ public class StudyActivity extends BaseActivity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.quit:
 			this.finish();
